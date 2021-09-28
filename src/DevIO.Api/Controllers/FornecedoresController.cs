@@ -52,15 +52,12 @@ namespace DevIO.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<FornecedorViewModel>> Adicionar(FornecedorViewModel fornecedorViewModel)
         {
-            //if (!ModelState.IsValid) return CustomResponse(ModelState);
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            //await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
             var result = await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
             if (!result) return BadRequest();
-            //return CustomResponse(fornecedorViewModel);
-            return Ok(result);
+            return CustomResponse(fornecedorViewModel);
         }
 
         //[ClaimsAuthorize("Fornecedor", "Atualizar")]
@@ -70,20 +67,16 @@ namespace DevIO.Api.Controllers
             if (id != fornecedorViewModel.Id)
             {
                 NotificarErro("O id informado não é o mesmo que foi passado na query");
-                //return CustomResponse(fornecedorViewModel);
-                return BadRequest();
+                return CustomResponse(fornecedorViewModel);
             }
 
-            //if (!ModelState.IsValid) return CustomResponse(ModelState);
-            if (!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            //await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
             var result = await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
             if (!result) return BadRequest();
 
-            //return CustomResponse(fornecedorViewModel);
-            return Ok(result);
+            return CustomResponse(fornecedorViewModel);
         }
 
         //[ClaimsAuthorize("Fornecedor", "Excluir")]
@@ -94,13 +87,11 @@ namespace DevIO.Api.Controllers
 
             if (fornecedorViewModel == null) return NotFound();
 
-            //await _fornecedorService.Remover(id);
             var result = await _fornecedorService.Remover(id);
 
             if (!result) return BadRequest();
 
-            return Ok(fornecedorViewModel);
-            //return CustomResponse(fornecedorViewModel);
+            return CustomResponse(fornecedorViewModel);
         }
 
         [HttpGet("endereco/{id:guid}")]
