@@ -54,9 +54,8 @@ namespace DevIO.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var result = await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
+            await _fornecedorService.Adicionar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
-            if (!result) return BadRequest();
             return CustomResponse(fornecedorViewModel);
         }
 
@@ -72,9 +71,7 @@ namespace DevIO.Api.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var result = await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
-
-            if (!result) return BadRequest();
+            await _fornecedorService.Atualizar(_mapper.Map<Fornecedor>(fornecedorViewModel));
 
             return CustomResponse(fornecedorViewModel);
         }
@@ -87,9 +84,7 @@ namespace DevIO.Api.Controllers
 
             if (fornecedorViewModel == null) return NotFound();
 
-            var result = await _fornecedorService.Remover(id);
-
-            if (!result) return BadRequest();
+            await _fornecedorService.Remover(id);
 
             return CustomResponse(fornecedorViewModel);
         }
@@ -101,21 +96,21 @@ namespace DevIO.Api.Controllers
         }
 
         //[ClaimsAuthorize("Fornecedor", "Atualizar")]
-        //[HttpPut("endereco/{id:guid}")]
-        //public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoViewModel enderecoViewModel)
-        //{
-        //    if (id != enderecoViewModel.Id)
-        //    {
-        //        NotificarErro("O id informado não é o mesmo que foi passado na query");
-        //        return CustomResponse(enderecoViewModel);
-        //    }
+        [HttpPut("endereco/{id:guid}")]
+        public async Task<IActionResult> AtualizarEndereco(Guid id, EnderecoViewModel enderecoViewModel)
+        {
+            if (id != enderecoViewModel.Id)
+            {
+                NotificarErro("O id informado não é o mesmo que foi passado na query");
+                return CustomResponse(enderecoViewModel);
+            }
 
-        //    if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        //    await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoViewModel));
+            await _fornecedorService.AtualizarEndereco(_mapper.Map<Endereco>(enderecoViewModel));
 
-        //    return CustomResponse(enderecoViewModel);
-        //}
+            return CustomResponse(enderecoViewModel);
+        }
 
         private async Task<FornecedorViewModel> ObterFornecedorProdutosEndereco(Guid id)
         {
