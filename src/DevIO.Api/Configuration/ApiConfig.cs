@@ -26,6 +26,10 @@ namespace DevIO.Api.Configuration
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseRouting();
 
