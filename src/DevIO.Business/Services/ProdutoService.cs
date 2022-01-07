@@ -23,6 +23,8 @@ namespace DevIO.Business.Services
         {
             if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
 
+            //TODO
+            //se eu quisesse saber qual usuario da aplicacao cadastrou o Produto
             //var user = _user.GetUserId();
 
             await _produtoRepository.Adicionar(produto);

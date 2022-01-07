@@ -19,8 +19,8 @@ namespace DevIO.Api.Extensions
 
         public Guid GetUserId()
         {
-            //return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
-            return Guid.NewGuid();
+            return IsAuthenticated() ? Guid.Parse(_accessor.HttpContext.User.GetUserId()) : Guid.Empty;
+            //return Guid.NewGuid();
         }
 
         public string GetUserEmail()
