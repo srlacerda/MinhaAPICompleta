@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace DevIO.Api
 {
@@ -39,8 +40,18 @@ namespace DevIO.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseAuthentication(); //precisa SEMPRE vir antes do app.UseMvcConfiguration(env);
+            if (env.IsDevelopment())
+            {
+                app.UseCors("Development");
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseCors("Production");
+                app.UseHsts();
+            }
 
+            app.UseAuthentication(); //precisa SEMPRE vir antes do app.UseMvcConfiguration(env);
             app.UseMvcConfiguration(env);
 
         }

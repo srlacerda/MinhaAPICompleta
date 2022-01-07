@@ -1,6 +1,7 @@
 ﻿using DevIO.Api.Extensions;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,6 +17,8 @@ using System.Threading.Tasks;
 namespace DevIO.Api.Controllers
 {
     [Route("api")]
+    [DisableCors] //ninguém de fora (outro dominio) de forma alguma vai conseguir chamar nenhum metodo desta controller
+    
     public class AuthController : MainController
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -32,6 +35,7 @@ namespace DevIO.Api.Controllers
             _appSettings = appSettings.Value;
         }
 
+        //[EnableCors("Development")] //nao sobrescreve a politica glolbal
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(RegisterUserViewModel registerUser)
         {
