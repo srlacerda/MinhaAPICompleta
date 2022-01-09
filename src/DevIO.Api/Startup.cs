@@ -13,12 +13,28 @@ namespace DevIO.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        //public Startup(IHostEnvironment hostEnvironment)
+        //{
+        //    var builder = new ConfigurationBuilder()
+        //        .SetBasePath(hostEnvironment.ContentRootPath)
+        //        .AddJsonFile("appsettings.json", true, true)
+        //        .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+        //        .AddEnvironmentVariables();
+
+        //    if (hostEnvironment.IsDevelopment())
+        //    {
+        //        builder.AddUserSecrets<Startup>();
+        //    }
+
+        //    Configuration = builder.Build();
+        //}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -36,6 +52,8 @@ namespace DevIO.Api
 
             services.AddSwaggerConfig();
 
+            services.AddLoggingConfig(Configuration);
+
             //comentar para rodar o migrations
             services.ResolveDependencies();
         }
@@ -45,8 +63,10 @@ namespace DevIO.Api
         {
             app.UseApiConfig(env);
 
-
             app.UseSwaggerConfig(provider);
+
+            app.UseLoggingConfiguration();
+
             //if (env.IsDevelopment())
             //{
             //    app.UseCors("Development");
@@ -60,8 +80,6 @@ namespace DevIO.Api
 
             //app.UseAuthentication(); //precisa SEMPRE vir antes do app.UseMvcConfiguration(env);
             //app.UseMvcConfiguration(env);
-
-
         }
     }
 }
