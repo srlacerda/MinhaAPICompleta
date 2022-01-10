@@ -11,7 +11,6 @@ namespace DevIO.Api.Configuration
 {
     public static class LoggerConfig
     {
-        [Obsolete]
         public static IServiceCollection AddLoggingConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddElmahIo(o =>
@@ -50,17 +49,6 @@ namespace DevIO.Api.Configuration
         public static IApplicationBuilder UseLoggingConfiguration(this IApplicationBuilder app)
         {
             app.UseElmahIo();
-
-            //app.UseHealthChecks("/api/hc", new HealthCheckOptions()
-            //{
-            //    Predicate = _ => true,
-            //    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            //});
-
-            //app.UseHealthChecksUI(options =>
-            //{
-            //    options.UIPath = "/api/hc-ui";
-            //});
 
             return app;
         }
